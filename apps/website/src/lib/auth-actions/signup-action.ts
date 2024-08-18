@@ -1,12 +1,10 @@
 "use server";
-import {  SignupSchema } from "@//schemas";
+import { SignupSchema } from "@//schemas";
 import * as z from "zod";
 import { db } from "@/lib/db";
 import { createVerificationToken } from "@//data/verification-token";
 import { MessageResponse } from "@//types/auth";
 import { hashMyPassword, sendEmailVerification } from "./common";
-
-
 
 export async function signUpAction(
   data: z.infer<typeof SignupSchema>,
@@ -51,4 +49,3 @@ export async function signUpAction(
     };
   }
 }
-
