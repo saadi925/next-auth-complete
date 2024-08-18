@@ -47,7 +47,7 @@ const SignInForm: React.FC = () => {
           <FormField
             control={form.control}
             name={"email"}
-            render={({ field }) => (
+            render={({ field } : any) => (
               <FormItem >
                 <FormLabel>
                   Email
@@ -65,7 +65,7 @@ const SignInForm: React.FC = () => {
                <FormField
             control={form.control}
             name={"password"}
-            render={({ field }) => (
+            render={({ field } : any) => (
               <FormItem >
                 <FormLabel>
                   Password
