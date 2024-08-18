@@ -1,5 +1,4 @@
 "use server";
-import bcrypt from "bcryptjs";
 import {  SignupSchema } from "@//schemas";
 import * as z from "zod";
 import { db } from "@/lib/db";

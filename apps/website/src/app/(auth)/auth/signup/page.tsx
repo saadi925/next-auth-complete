@@ -3,7 +3,7 @@ import * as z from 'zod';
 import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 import GoBack from '@//components/auth-components/GoBack';
-import { MailIcon, Lock, User, EyeIcon, EyeOff } from 'lucide-react'
+import { MailIcon, User, EyeIcon, EyeOff } from 'lucide-react'
 import {
   useSignUp
 } from '@//hooks/auth/useSignup'

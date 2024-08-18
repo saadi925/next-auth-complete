@@ -1,8 +1,8 @@
 "use server";
 import { db } from "@/lib/db";
 import { getVerificationTokenByToken } from "@//data/verification-token";
-import { getUserByEmail } from "@//data/user";
-import { MessageResponse } from "@//types/auth";
+import { getUserByEmail } from "@/data/user";
+import { MessageResponse } from "@/types/auth";
 
 export async function emailVerifyAction(
   token?: string,

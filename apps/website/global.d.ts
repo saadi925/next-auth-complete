@@ -10,8 +10,6 @@ namespace NodeJS {
         GMAIL_SENDER_EMAIL : string;
         GMAIL_SENDER_PASSWORD : string;
         HOST : string;
-        // AUTH_TWITTER_ID : string
-        // AUTH_TWITTER_SECRET : string
         FACEBOOK_CLIENT_ID : string
         FACEBOOK_CLIENT_SECRET : string
     }

@@ -1,8 +1,7 @@
 export interface MessageResponse {
     message: string;
     success: boolean;
-  };
-
+  }
   import { DefaultSession} from "next-auth"
   import { UserRole } from "@prisma/client"
 

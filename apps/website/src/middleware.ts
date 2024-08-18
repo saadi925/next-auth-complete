@@ -16,7 +16,6 @@ export default auth((req) => {
   const isAuthRoute = authRoutes.some((route) =>
     nextUrl.pathname.match(new RegExp(`^${route}(\/.*)?$`)),
   );
-  // const isAdminRoute = nextUrl.pathname.startsWith('/admin')
 
   if (isApiAuth) {
     return;
