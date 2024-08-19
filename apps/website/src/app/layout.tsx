@@ -21,13 +21,13 @@ export default function RootLayout({
       <body className={`
       ${fonts.inter.variable} 
       bg-gray-100 dark:bg-background       `}>
-    <Provider>
-      <div className="absolute top-0 right-0">
-      <ThemeSwitch />
-      </div>
-      {auth}
-      {children}
-    </Provider>
+        <Provider>
+          <div className="absolute top-0 right-0">
+            <ThemeSwitch />
+          </div>
+          {auth}
+          {children}
+        </Provider>
       </body>
     </html>
   );
