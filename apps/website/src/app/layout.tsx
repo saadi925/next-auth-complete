@@ -14,7 +14,7 @@ export default function RootLayout({
   auth
 }: {
   children: React.ReactNode;
-  auth: React.ReactNode;
+  auth?: React.ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -25,8 +25,8 @@ export default function RootLayout({
       <div className="absolute top-0 right-0">
       <ThemeSwitch />
       </div>
-      {children}
       {auth}
+      {children}
     </Provider>
       </body>
     </html>
