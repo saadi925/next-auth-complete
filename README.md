@@ -27,6 +27,9 @@ GOOGLE_CLIENT_ID="your-secret"
 HOST="http://localhost:3000"
 
 
+GMAIL_SENDER_EMAIL="your_app_gmail"
+GMAIL_SENDER_PASSWORD="gmail_apps_password_check_nodemailer"
+
 FACEBOOK_CLIENT_ID="your-secret"
 FACEBOOK_CLIENT_SECRET="your-secret"
 
