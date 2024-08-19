@@ -1,15 +1,14 @@
 "use client"
 import { Form, FormFeedback, FormField, FormItem, FormLabel, FormControl } from '@repo/ui/components/form'
-import React, {useTransition} from 'react'
+import React, {TransitionFunction, useTransition} from 'react'
 import { useForgotPassword } from '@//hooks/auth/useForgotPassword'
 import { z } from 'zod';
 import { ForgotPasswordSchema } from '@//schemas';
 import { Input } from '@repo/ui/components/input';
 import { cn } from '@repo/ui/lib/utils';
 import { forgotPasswordAction } from '@/lib/auth-actions/forgot-password';
-import GoBack from '@//components/auth-components/GoBack';
 import { Button } from '@repo/ui/components/button';
-export default function page() {
+export default function ForgotPasswordForm() {
 
  const form = useForgotPassword();
  const [message, setMessage] = React.useState<{
@@ -22,26 +21,26 @@ export default function page() {
   const [isPending, startTransition] = useTransition();
   const onSubmit = (data: z.infer<typeof ForgotPasswordSchema>) => {
   setMessage({type : 'error', message: ''})
-
-    startTransition(async () => {
-      const res = await forgotPasswordAction(data);
+  const cb = () => {
+    forgotPasswordAction(data).then(res => {
       setMessage({
         type: res.success ? "success" : "error",
         message: res.message
-      })
+      });
     });
-
+  };
+  
+  startTransition(cb);
   }
     return (
         <>
-        <GoBack />
         <h2 className="text-2xl font-bold mb-2">Reset Your Password</h2>
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
       <FormField
             control={form.control}
             name={"email"}
-            render={({ field } : any) => (
+            render={({ field }) => (
               <FormItem >
                 <FormLabel>
                   Email

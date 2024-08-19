@@ -8,11 +8,11 @@ import { Input } from '@repo/ui/components/input';
 import { cn } from '@repo/ui/lib/utils';
 import {  EyeIcon, EyeOff } from 'lucide-react'
 import { resetPasswordAction } from '@/lib/auth-actions/forgot-password';
-import GoBack from '@/components/auth-components/GoBack';
 import { Button } from '@repo/ui/components/button';
 export default function NewPasswordForm({token} : {
     token?: string
 }) {
+
   const [showPassword ,setShowPassword] = useState(false)
  const form = useResetPassword();
  const [message, setMessage] = React.useState<{
@@ -32,18 +32,16 @@ export default function NewPasswordForm({token} : {
     })  
     return 
   }
-    startTransition(async () => {
-      const res = await resetPasswordAction(token , data);
-      setMessage({
+    startTransition(() => {
+      resetPasswordAction(token , data).then(res=>  setMessage({
         type: res.success ? "success" : "error",
         message: res.message
-      })
+      }))
     });
 
   }
     return (
         <>
-        <GoBack />
         <h2 className="text-2xl font-bold mb-2">Reset Your Password</h2>
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

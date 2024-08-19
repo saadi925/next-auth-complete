@@ -11,9 +11,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  auth
+}: {
   children: React.ReactNode;
-}>) {
+  auth: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`
@@ -24,6 +26,7 @@ export default function RootLayout({
       <ThemeSwitch />
       </div>
       {children}
+      {auth}
     </Provider>
       </body>
     </html>

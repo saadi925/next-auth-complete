@@ -8,7 +8,7 @@ interface ResetPasswordProps {
 
 export default function page({searchParams} : ResetPasswordProps) {
     const {token } = searchParams
-
+ 
   return (
     <NewPasswordForm token={token} />
   )

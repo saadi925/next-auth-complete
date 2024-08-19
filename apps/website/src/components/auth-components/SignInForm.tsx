@@ -1,22 +1,25 @@
 'use client'
 import * as z from 'zod';
-import React, { useState, useTransition } from 'react';
+import React, {  useState, useTransition } from 'react';
 import Link from 'next/link';
 import GoBack from '@//components/auth-components/GoBack';
-import { MailIcon, User, EyeIcon, EyeOff } from 'lucide-react'
+import { MailIcon, EyeIcon, EyeOff } from 'lucide-react'
 import {
-  useSignUp
-} from '@//hooks/auth/useSignup'
+  useSignIn
+} from '@//hooks/auth/useSignIn'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormFeedback } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import { Button } from '@repo/ui/components/button';
-import { SignupSchema } from '@//schemas';
+import { LoginSchema } from '@//schemas';
 import { cn } from '@repo/ui/lib/utils';
-import { signUpAction } from '@/lib/auth-actions/signup-action';
+
+
+import { signInAction } from '@/lib/auth-actions/signin-action';
 import AuthProvidersCTA from '@//components/auth-components/AuthProvidersCTA';
-const SignUpForm: React.FC = () => {
-  const form = useSignUp();
+const SignInForm: React.FC = () => {
+  // sign in on the client with a provider
   const [showPassword ,setShowPassword] = useState(false)
+  const form = useSignIn();
   const [message, setMessage] = React.useState<{
     type: 'error' | 'success';
     message: string
@@ -25,59 +28,40 @@ const SignUpForm: React.FC = () => {
     message: ''
   })
   const [isPending, startTransition] = useTransition();
-  const onSubmit = (data: z.infer<typeof SignupSchema>) => {
-    startTransition(async () => {
-      const res = await signUpAction(data);
-      setMessage({
-      type : res.success ? "success": "error",
-      message : res.message
-      })
+  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
+    startTransition( () => {
+      signInAction(data).then(res=>  setMessage({
+        type: res.success ? "success" : "error",
+        message: res.message
+      }))
+     
     });
 
   }
-
   return (
     <>
-      <GoBack />
       <h2 className="text-2xl font-bold mb-2">Sign In to Continue</h2>
       <Form  {...form} >
         <form className='flex flex-col gap-2' onSubmit={form.handleSubmit(onSubmit)}  >
-        <FormField
+          <FormField
             control={form.control}
-            name={"name"}
+            name={"email"}
             render={({ field }) => (
               <FormItem >
                 <FormLabel>
-                  Name
+                  Email
                 </FormLabel>
                 <FormControl>
                   <div className="relative ">
-                    <Input disabled={isPending} placeholder='Name' type='text' {...field} />
-                    <User className={cn(`top-2 right-2 absolute`)} />
+                    <Input disabled={isPending} placeholder='Email' type='email' {...field} />
+                    <MailIcon className={cn(`top-2 right-2 absolute`)} />
                   </div>
                 </FormControl>
-                <FormFeedback type="error" message={form.formState.errors.name?.message} />
+                <FormFeedback type="error" message={form.formState.errors.email?.message} />
               </FormItem>
             )}
-          /><FormField
-          control={form.control}
-          name={"email"}
-          render={({ field }) => (
-            <FormItem >
-              <FormLabel>
-                Email
-              </FormLabel>
-              <FormControl>
-                <div className="relative ">
-                  <Input disabled={isPending} placeholder='Email' type='email' {...field} />
-                  <MailIcon className={cn(`top-2 right-2 absolute`)} />
-                </div>
-              </FormControl>
-              <FormFeedback type="error" message={form.formState.errors.email?.message} />
-            </FormItem>
-          )}
-        />
-          <FormField
+          />
+               <FormField
             control={form.control}
             name={"password"}
             render={({ field }) => (
@@ -98,26 +82,30 @@ const SignUpForm: React.FC = () => {
               </FormItem>
             )}
           />
-         {message &&  <FormFeedback
+          <FormFeedback
             type={message.type}
             message={message.message}
-          />}
+          />
 
-
+            <Link className='text-sm text-gray-500' href={'/auth/forgot-password'}>
+              Forgot Password?
+            </Link>
           <Button disabled={isPending} type='submit' className='w-full'>
-            Sign Up
+            Sign In
           </Button>
         </form>
         <p className='mt-2'>
-          <Link className=' mr-2 text-sm underline' href={'/auth/signin'}>
-           Aleady Have an Account?
+          <Link className=' mr-2' href={'/auth/signup'}>
+            Create an Account!
           </Link>
+          <span className='opacity-70'>
+            if you don't have one.
+          </span>
         </p>
-    
       </Form>
       <AuthProvidersCTA />
     </>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

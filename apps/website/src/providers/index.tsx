@@ -1,6 +1,6 @@
-import NextThemeProvider from '@repo/ui/theme/ThemeProvider'
 import { SessionProvider } from 'next-auth/react'
 import React from 'react'
+import NextThemeProvider from './ThemeProvider'
 
 export default function Provider({
     children 

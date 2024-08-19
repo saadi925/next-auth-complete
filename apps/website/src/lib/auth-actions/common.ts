@@ -2,7 +2,7 @@ import { EmailService } from "@//services/email_sender";
 import bcrypt from "bcryptjs";
 import { auth } from "@//auth";
 export async function sendEmailVerification(email: string, token: string) {
-    const verificationLink = `http://localhost:3000/email_verify?token=${token}`;
+    const verificationLink = `http://localhost:3000/auth/email_verify?token=${token}`;
     const sender = new EmailService();
     await sender.sendVerificationEmail(email, verificationLink);
   }

@@ -2,7 +2,7 @@
 
 import { ForgotPasswordSchema, ResetPasswordSchema } from "@//schemas";
 import { z } from "zod";
-import { getResetPasswordTokenByToken } from "@//data/resetpassword-token";
+import { createResetPasswordToken, getResetPasswordTokenByToken } from "@//data/resetpassword-token";
 import { getUserByEmail } from "@//data/user";
 import { createVerificationToken } from "@//data/verification-token";
 import { MessageResponse } from "@//types/auth";
@@ -35,7 +35,7 @@ export async function forgotPasswordAction(  data: z.infer<typeof ForgotPassword
         success: false
     }
    }
-    const token = await createVerificationToken(email);
+    const token = await createResetPasswordToken(email);
     if (!token) {
         return {
         message: "Something went wrong",
@@ -62,6 +62,8 @@ export async function forgotPasswordAction(  data: z.infer<typeof ForgotPassword
 
 export async function resetPasswordAction(token: string, data : z.infer<typeof ResetPasswordSchema>) : Promise<MessageResponse> {
  try {
+     
+    
     const validate = ResetPasswordSchema.safeParse(data);
     if (!validate.success) {
         return {
@@ -81,12 +83,15 @@ export async function resetPasswordAction(token: string, data : z.infer<typeof R
         };
     }
     const tokenExists = await getResetPasswordTokenByToken(token);
+    console.log("tokenExists", tokenExists);
+    
     if (!tokenExists) {
         return {
         message: "Invalid token",
         success: false,
         };
     }
+
     // update password
     const user = await getUserByEmail(tokenExists.email);
     if (!user) {
